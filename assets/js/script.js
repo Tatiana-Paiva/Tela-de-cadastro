@@ -18,9 +18,22 @@ class Validator {
      inputsArray.forEach(function(input) {
          
         //Loop em todas as validações existentes
+
         for(let i = 0; this.validations.length > i; i++) {
-            //verifica se a validação atual existe no input
+            if(input.getAttribute(this.validations[i]))
+
+    //verifica se a validação atual existe no input
+
             if(input.getAttribute(this.validations[i]) != null) {
+
+        // limpando a string para virar um método
+        let method = this.validations[i].replace('data-',"").replace('-' ,'' )
+
+        //valor do input
+        let value = input.getAttribute(this.validations[i])
+
+        //invocar o método
+        this[method](input, value)
                 
             }
             
@@ -28,7 +41,15 @@ class Validator {
      }, this)
      
     }
+    //Verifica se um input tem um número minímo de caractéres
+    minlength(input, minValue) {
+     let inputLength = input.value.length
+     let errorMessage = `O campo precisa ter pelo menos ${minValue} caracteres`
+     if (inputLength < minValue) {
+        console.log(errorMessage)
+     }
 
+    }
    
     }
 
